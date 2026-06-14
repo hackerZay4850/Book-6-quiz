@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari Book 6 Quiz Portal</title>
+  <style>
+    body {
+      min-height: 100vh;
+      background: #F7F3EE;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: #1A1A1A;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #1A3A5C 0%, #2E6B5A 100%);
+      color: white;
+      padding: 24px 20px 20px;
+      text-align: center;
+    }
+    .header-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+    .header-title { font-size: 26px; font-weight: bold; margin-bottom: 4px; }
+    .header-sub { font-size: 13px; opacity: 0.8; }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
+
+    /* ── SETUP ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: bold;
+      color: #888;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .topic-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .topic-btn {
+      padding: 7px 13px;
+      border-radius: 20px;
+      border: 2px solid var(--col);
+      background: transparent;
+      color: var(--col);
+      font-size: 12px;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      font-weight: normal;
+      transition: all 0.15s;
+    }
+    .topic-btn.active {
+      background: var(--col);
+      color: white;
+      font-weight: bold;
+    }
+    .link-row { display: flex; gap: 10px; margin-bottom: 28px; align-items: center; }
+    .link-btn {
+      font-size: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: Georgia, serif;
+    }
+    .link-sep { color: #ccc; }
+
+    .count-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .count-btn {
+      width: 52px; height: 52px;
+      border-radius: 10px;
+      border: 2px solid #DDD;
+      background: white;
+      color: #444;
+      font-size: 15px;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-weight: normal;
+    }
+    .count-btn.active {
+      border-color: #1A3A5C;
+      background: #1A3A5C;
+      color: white;
+      font-weight: bold;
+    }
+    .count-btn:disabled { opacity: 0.4; cursor: default; }
+
+    .count-hint { color: #888; font-size: 12px; margin-bottom: 28px; }
+
+    /* ── PRIMARY BUTTON ── */
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #1A3A5C, #2E6B5A);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: Georgia, serif;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+    .btn-primary:disabled { background: #CCC; cursor: default; }
+
+    /* ── QUIZ ── */
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .progress-track {
+      height: 5px;
+      background: #DDD;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #1A3A5C, #2E6B5A);
+      border-radius: 3px;
+      transition: width 0.4s;
+    }
+
+    .topic-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .question-text {
+      font-size: 17px;
+      color: #1A1A1A;
+      margin-bottom: 22px;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .option-btn {
+      width: 100%;
+      padding: 13px 16px;
+      background: white;
+      border: 2px solid #DDD;
+      border-radius: 8px;
+      color: #222;
+      font-size: 14px;
+      font-family: Georgia, serif;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-sizing: border-box;
+    }
+    .option-btn.selected { background: #EEF3FA; border-color: #1A3A5C; color: #1A3A5C; }
+    .option-btn.correct  { background: #E6F4ED; border-color: #2E6B5A; color: #1A5C3A; }
+    .option-btn.wrong    { background: #FAE6E6; border-color: #C0392B; color: #C0392B; }
+    .option-btn.revealed { cursor: default; }
+
+    .option-letter {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: #EEE;
+      color: #888;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .option-btn.selected .option-letter { background: #1A3A5C; color: white; }
+    .option-btn.correct  .option-letter { background: #2E6B5A; color: white; }
+    .option-btn.wrong    .option-letter { background: #C0392B; color: white; }
+
+    .explanation {
+      padding: 14px 16px;
+      background: #F0F7F4;
+      border-left: 4px solid #2E6B5A;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #2C4A3A;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .btn-check {
+      width: 100%; padding: 14px;
+      border-radius: 8px; border: none;
+      background: #1A3A5C;
+      color: white; font-size: 15px;
+      font-family: Georgia, serif; font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-check:disabled { background: #CCC; cursor: default; }
+    .btn-next {
+      width: 100%; padding: 14px;
+      border-radius: 8px; border: none;
+      background: linear-gradient(135deg, #1A3A5C, #2E6B5A);
+      color: white; font-size: 15px;
+      font-family: Georgia, serif; font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* ── RESULTS ── */
+    .results-centre { text-align: center; margin-bottom: 28px; }
+    .score-ring {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 0 0 8px white, 0 0 0 10px #2E6B5A33;
+    }
+    .score-inner {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: white;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .score-pct { font-size: 28px; font-weight: bold; color: #1A3A5C; }
+    .score-frac { font-size: 11px; color: #888; }
+    .score-grade { font-size: 18px; font-weight: bold; color: #1A3A5C; }
+
+    .breakdown-card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .breakdown-row { margin-bottom: 10px; }
+    .breakdown-header {
+      display: flex; justify-content: space-between;
+      font-size: 12px; margin-bottom: 3px;
+    }
+    .breakdown-track {
+      height: 5px; background: #EEE; border-radius: 3px;
+    }
+    .breakdown-fill {
+      height: 100%; border-radius: 3px;
+      transition: width 0.5s;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #AAA;
+      padding: 16px;
+      margin-top: 8px;
+    }
+
+    /* ── HIDDEN ── */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-eyebrow">Safari Academy</div>
+    <div class="header-title">Islamic Studies Book 6</div>
+    <div class="header-sub">Knowledge Assessment & Review Portal</div>
+  </div>
+
+  <div class="container">
+    
+    <div id="view-setup">
+      <div class="section-label">Topics</div>
+      <div class="topic-grid" id="topic-grid"></div>
+      <div class="link-row">
+        <button class="link-btn" style="color:#2E6B5A" onclick="selectAllTopics()">Select all</button>
+        <span class="link-sep">|</span>
+        <button class="link-btn" style="color:#888" onclick="clearTopics()">Clear all</button>
+      </div>
+
+      <div class="section-label">Number of Questions</div>
+      <div class="count-grid" id="count-grid"></div>
+      <div class="count-hint" id="count-hint">Select a topic to calculate total available questions.</div>
+
+      <button class="btn-primary" id="btn-start" disabled onclick="startQuiz()">Start Test →</button>
+    </div>
+
+    <div id="view-quiz" class="hidden">
+      <div class="progress-row">
+        <span id="quiz-progress-text">Question 1 of 5</span>
+        <span id="quiz-score-live">Score: 0</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="quiz-progress-fill" style="width: 0%;"></div>
+      </div>
+
+      <div class="topic-badge" id="quiz-topic-badge" style="background: #1A3A5C; color: white;">Fiqh</div>
+      <div class="question-text" id="quiz-question-text">Question text goes here?</div>
+
+      <div class="options" id="quiz-options-container"></div>
+
+      <div class="explanation hidden" id="quiz-explanation"></div>
+
+      <button class="btn-check" id="btn-action" disabled onclick="handleQuizAction()">Check Answer</button>
+    </div>
+
+    <div id="view-results" class="hidden">
+      <div class="results-centre">
+        <div class="score-ring">
+          <div class="score-inner">
+            <div class="score-pct" id="res-pct">0%</div>
+            <div class="score-frac" id="res-frac">0/0</div>
+          </div>
+        </div>
+        <div class="score-grade" id="res-grade">Keep Reviewing!</div>
+      </div>
+
+      <div class="section-label">Topic Breakdown</div>
+      <div class="breakdown-card" id="res-breakdown"></div>
+
+      <button class="btn-primary" onclick="restartApp()">Try Another Test</button>
+    </div>
+
+    <div class="footer">
+      Powered by Safari Book 6 Educational Framework
+    </div>
+  </div>
+
+  <script>
+    // ── DATA DEFINITIONS FOR SAFARI BOOK 6 ──
+    const quizTopics = [
+      { id: 'aqidah', name: 'Aqidah & Belief System', color: '#1A3A5C' },
+      { id: 'fiqh', name: 'Fiqh (Rules of Worship)', color: '#2E6B5A' },
+      { id: 'seerah', name: 'Seerah & Islamic History', color: '#C0392B' },
+      { id: 'adab', name: 'Adab & Akhlaq (Manners)', color: '#8E44AD' }
+    ];
+
+    const quizQuestions = [
+      {
+        id: 1,
+        topic: 'aqidah',
+        question: 'Which of the following describes the core theological difference between the attributes of Allah (Sifat) and the creations?',
+        options: [
+          { letter: 'A', text: 'Allah\'s attributes are created over time' },
+          { letter: 'B', text: 'Allah\'s attributes are eternal, perfect, and absolute without any resemblance to creation' },
+          { letter: 'C', text: 'Attributes change depending on human actions' },
+          { letter: 'D', text: 'Attributes can be shared entirely with Prophets' }
+        ],
+        correct: 'B',
+        explanation: 'In Book 6 Aqidah, Tanzih defines that Allah\'s Sifat are absolute, eternal, and distinct from any limitations or descriptions seen in created beings.'
+      },
+      {
+        id: 2,
+        topic: 'fiqh',
+        question: 'Under Fiqh regulations, what is the core legal ruling regarding a traveler combining prayers (Jam\') and shortening them (Qasr)?',
+        options: [
+          { letter: 'A', text: 'It is strictly forbidden under normal circumstances' },
+          { letter: 'B', text: 'It is a concession (Rukhshah) allowed when traveling past the specified threshold distance' },
+          { letter: 'C', text: 'It is mandatory for every single prayer daily' },
+          { letter: 'D', text: 'It can only be applied to Fajr and Maghrib prayers' }
+        ],
+        correct: 'B',
+        explanation: 'Qasr and Jam\' serve as valid concessions (Rukhshah) designed to ease hardship for travelers once they exit their residential city limits for travel distances defined in Fiqh.'
+      },
+      {
+        id: 3,
+        topic: 'seerah',
+        question: 'What major milestone followed the Treaty of Hudaybiyyah in terms of the spread of Islam during the Seerah?',
+        options: [
+          { letter: 'A', text: 'The immediate building of the Prophet\'s Mosque' },
+          { letter: 'B', text: 'The immediate migration to Abyssinia' },
+          { letter: 'C', text: 'Peace allowed the Prophet (SAW) to safely dispatch diplomatic letters to global rulers' },
+          { letter: 'D', text: 'The termination of all trade agreements across Arabia' }
+        ],
+        correct: 'C',
+        explanation: 'The temporary peace afforded by the Treaty of Hudaybiyyah allowed the Prophet ﷺ to expand outreach, writing directly to empires like Rome, Persia, and Abyssinia.'
+      },
+      {
+        id: 4,
+        topic: 'adab',
+        question: 'According to the principles of Akhlaq, which attribute counteracts the spiritual disease of Hasad (destructive envy)?',
+        options: [
+          { letter: 'A', text: 'Riyaa (Showing off accomplishments)' },
+          { letter: 'B', text: 'Qana\'ah (Contentment with what Allah has decreed)' },
+          { letter: 'C', text: 'Kibr (Arrogance toward peers)' },
+          { letter: 'D', text: 'Ujb (Vanity in worship)' }
+        ],
+        correct: 'B',
+        explanation: 'Qana\'ah (contentment) directly neutralizes Hasad. Being content with your own provision means you do not harbor malicious feelings toward the blessings of others.'
+      }
+    ];
+
+    // ── APPLICATION STATE ──
+    let selectedTopics = [];
+    let targetQuestionCount = 0;
+    let activeQuizPool = [];
+    let currentIdx = 0;
+    let correctAnswersCount = 0;
+    let selectedOptionLetter = null;
+    let isAnswerChecked = false;
+    let topicTrackingData = {};
+
+    // ── INITIALIZATION ──
+    function init() {
+      renderTopics();
+      updateTargetCountsGrid();
+    }
+
+    function renderTopics() {
+      const grid = document.getElementById('topic-grid');
+      grid.innerHTML = quizTopics.map(t => `
+        <button class="topic-btn" id="tbtn-${t.id}" style="--col: ${t.color}" onclick="toggleTopic('${t.id}')">
+          ${t.name}
+        </button>
+      `).join('');
+    }
+
+    // ── CONFIGURATION & SETUP EVENT HANDLERS ──
+    function toggleTopic(id) {
+      if (selectedTopics.includes(id)) {
+        selectedTopics = selectedTopics.filter(t => t !== id);
+        document.getElementById(`tbtn-${id}`).classList.remove('active');
+      } else {
+        selectedTopics.push(id);
+        document.getElementById(`tbtn-${id}`).classList.add('active');
+      }
+      updateTargetCountsGrid();
+    }
+
+    function selectAllTopics() {
+      selectedTopics = quizTopics.map(t => t.id);
+      quizTopics.forEach(t => document.getElementById(`tbtn-${t.id}`).classList.add('active'));
+      updateTargetCountsGrid();
+    }
+
+    function clearTopics() {
+      selectedTopics = [];
+      quizTopics.forEach(t => document.getElementById(`tbtn-${t.id}`).classList.remove('active'));
+      updateTargetCountsGrid();
+    }
+
+    function updateTargetCountsGrid() {
+      const pool = quizQuestions.filter(q => selectedTopics.includes(q.topic));
+      const totalAvailable = pool.length;
+      
+      const hint = document.getElementById('count-hint');
+      hint.innerText = `${totalAvailable} questions found within matching configurations.`;
+
+      const grid = document.getElementById('count-grid');
+      grid.innerHTML = '';
+
+      if (totalAvailable === 0) {
+        document.getElementById('btn-start').disabled = true;
+        return;
+      }
+
+      // Generate step options based on volume up to pool ceiling
+      const intervals = [3, 5, 10, 20].filter(num => num <= totalAvailable);
+      if (!intervals.includes(totalAvailable) && totalAvailable > 0) {
+        intervals.push(totalAvailable);
+      }
+
+      intervals.forEach(num => {
+        const btn = document.createElement('button');
+        btn.className = 'count-btn';
+        if (targetQuestionCount === num) btn.className += ' active';
+        btn.innerText = num;
+        btn.onclick = () => {
+          targetQuestionCount = num;
+          updateTargetCountsGrid();
+        };
+        grid.appendChild(btn);
+      });
+
+      // Ensure fallback if previously selected value exceeds new bounds
+      if (!intervals.includes(targetQuestionCount)) {
+        targetQuestionCount = intervals[0] || 0;
+        const targetBtn = grid.children[0];
+        if (targetBtn) targetBtn.classList.add('active');
+      }
+
+      document.getElementById('btn-start').disabled = targetQuestionCount === 0;
+    }
+
+    // ── ENGINE CONTROLLERS ──
+    function startQuiz() {
+      const pool = quizQuestions.filter(q => selectedTopics.includes(q.topic));
+      // Simple random sorting array mechanism
+      activeQuizPool = pool.sort(() => 0.5 - Math.random()).slice(0, targetQuestionCount);
+      
+      currentIdx = 0;
+      correctAnswersCount = 0;
+      topicTrackingData = {};
+      
+      // Initialize tracking counts across topics
+      selectedTopics.forEach(id => {
+        topicTrackingData[id] = { total: 0, correct: 0 };
+      });
+
+      document.getElementById('view-setup').classList.add('hidden');
+      document.getElementById('view-quiz').classList.remove('hidden');
+      
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      isAnswerChecked = false;
+      selectedOptionLetter = null;
+
+      const q = activeQuizPool[currentIdx];
+      
+      // Track the distribution frequency inside tracking logs
+      if (topicTrackingData[q.topic]) {
+        topicTrackingData[q.topic].total += 1;
+      }
+
+      // Update basic status tracking fields
+      document.getElementById('quiz-progress-text').innerText = `Question ${currentIdx + 1} of ${targetQuestionCount}`;
+      document.getElementById('quiz-score-live').innerText = `Score: ${correctAnswersCount}`;
+      
+      const fillPercentage = (currentIdx / targetQuestionCount) * 100;
+      document.getElementById('quiz-progress-fill').style.width = `${fillPercentage}%`;
+
+      const topicMeta = quizTopics.find(t => t.id === q.topic);
+      const badge = document.getElementById('quiz-topic-badge');
+      badge.innerText = topicMeta ? topicMeta.name : q.topic;
+      badge.style.background = topicMeta ? topicMeta.color : '#1A3A5C';
+      badge.style.color = 'white';
+
+      document.getElementById('quiz-question-text').innerText = q.question;
+      
+      // Clean up layout items
+      document.getElementById('quiz-explanation').classList.add('hidden');
+      const actionBtn = document.getElementById('btn-action');
+      actionBtn.className = 'btn-check';
+      actionBtn.innerText = 'Check Answer';
+      actionBtn.disabled = true;
+
+      const optContainer = document.getElementById('quiz-options-container');
+      optContainer.innerHTML = q.options.map(o => `
+        <button class="option-btn" id="opt-${o.letter}" onclick="selectOption('${o.letter}')">
+          <div class="option-letter">${o.letter}</div>
+          <div>${o.text}</div>
+        </button>
+      `).join('');
+    }
+
+    function selectOption(letter) {
+      if (isAnswerChecked) return;
+      
+      selectedOptionLetter = letter;
+      document.getElementById('btn-action').disabled = false;
+
+      const options = document.querySelectorAll('.option-btn');
+      options.forEach(opt => opt.classList.remove('selected'));
+      
+      document.getElementById(`opt-${letter}`).classList.add('selected');
+    }
+
+    function handleQuizAction() {
+      if (!isAnswerChecked) {
+        evaluateSubmittedSelection();
+      } else {
+        advanceWorkflowIndex();
+      }
+    }
+
+    function evaluateSubmittedSelection() {
+      isAnswerChecked = true;
+      const q = activeQuizPool[currentIdx];
+      
+      const selectedBtn = document.getElementById(`opt-${selectedOptionLetter}`);
+      const correctBtn = document.getElementById(`opt-${q.correct}`);
+
+      selectedBtn.classList.remove('selected');
+      
+      if (selectedOptionLetter === q.correct) {
+        selectedBtn.classList.add('correct');
+        correctAnswersCount += 1;
+        if (topicTrackingData[q.topic]) topicTrackingData[q.topic].correct += 1;
+      } else {
+        selectedBtn.classList.add('wrong');
+        if (correctBtn) correctBtn.classList.add('correct');
+      }
+
+      const allOptions = document.querySelectorAll('.option-btn');
+      allOptions.forEach(opt => opt.classList.add('revealed'));
+
+      // Render out feedback explanations
+      const expBox = document.getElementById('quiz-explanation');
+      expBox.innerText = q.explanation;
+      expBox.classList.remove('hidden');
+
+      // Adjust primary action tracking label
+      const actionBtn = document.getElementById('btn-action');
+      actionBtn.className = 'btn-next';
+      actionBtn.innerText = (currentIdx === targetQuestionCount - 1) ? 'Finish Quiz' : 'Next Question';
+      
+      document.getElementById('quiz-score-live').innerText = `Score: ${correctAnswersCount}`;
+    }
+
+    function advanceWorkflowIndex() {
+      if (currentIdx < targetQuestionCount - 1) {
+        currentIdx++;
+        displayQuestion();
+      } else {
+        showFinalResultsDisplay();
+      }
+    }
+
+    function showFinalResultsDisplay() {
+      document.getElementById('view-quiz').classList.add('hidden');
+      document.getElementById('view-results').classList.remove('hidden');
+
+      const pct = Math.round((correctAnswersCount / targetQuestionCount) * 100);
+      document.getElementById('res-pct').innerText = `${pct}%`;
+      document.getElementById('res-frac').innerText = `${correctAnswersCount}/${targetQuestionCount}`;
+
+      let grade = 'Keep Reviewing!';
+      if (pct >= 85) grade = 'Excellent Mastery!';
+      else if (pct >= 65) grade = 'Good Progress!';
+      document.getElementById('res-grade').innerText = grade;
+
+      const breakdownBox = document.getElementById('res-breakdown');
+      breakdownBox.innerHTML = '';
+
+      selectedTopics.forEach(topicId => {
+        const meta = quizTopics.find(t => t.id === topicId);
+        const data = topicTrackingData[topicId];
+        
+        if (data && data.total > 0) {
+          const ratio = Math.round((data.correct / data.total) * 100);
+          
+          const row = document.createElement('div');
+          row.className = 'breakdown-row';
+          row.innerHTML = `
+            <div class="breakdown-header">
+              <span>${meta ? meta.name : topicId}</span>
+              <strong>${data.correct}/${data.total} (${ratio}%)</strong>
+            </div>
+            <div class="breakdown-track">
+              <div class="breakdown-fill" style="width: ${ratio}%; background: ${meta ? meta.color : '#CCC'}"></div>
+            </div>
+          `;
+          breakdownBox.appendChild(row);
+        }
+      });
+    }
+
+    function restartApp() {
+      document.getElementById('view-results').classList.add('hidden');
+      document.getElementById('view-setup').classList.remove('hidden');
+      clearTopics();
+    }
+
+    // Initialize application layout components on load sequence execution
+    window.onload = init;
+  </script>
+</body>
+</html>
