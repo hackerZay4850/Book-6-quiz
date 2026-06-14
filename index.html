@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Safari Book 6 Quiz Portal</title>
+  <title>Safari Book 6 Portal</title>
   <style>
     body {
       min-height: 100vh;
@@ -278,7 +278,7 @@
   <div class="header">
     <div class="header-eyebrow">Safari Academy</div>
     <div class="header-title">Islamic Studies Book 6</div>
-    <div class="header-sub">Knowledge Assessment & Review Portal</div>
+    <div class="header-sub">Master Question Assessment Bank</div>
   </div>
 
   <div class="container">
@@ -301,15 +301,15 @@
 
     <div id="view-quiz" class="hidden">
       <div class="progress-row">
-        <span id="quiz-progress-text">Question 1 of 5</span>
+        <span id="quiz-progress-text">Question 1 of 50</span>
         <span id="quiz-score-live">Score: 0</span>
       </div>
       <div class="progress-track">
         <div class="progress-fill" id="quiz-progress-fill" style="width: 0%;"></div>
       </div>
 
-      <div class="topic-badge" id="quiz-topic-badge" style="background: #1A3A5C; color: white;">Fiqh</div>
-      <div class="question-text" id="quiz-question-text">Question text goes here?</div>
+      <div class="topic-badge" id="quiz-topic-badge">Topic</div>
+      <div class="question-text" id="quiz-question-text">Question text template?</div>
 
       <div class="options" id="quiz-options-container"></div>
 
@@ -326,7 +326,7 @@
             <div class="score-frac" id="res-frac">0/0</div>
           </div>
         </div>
-        <div class="score-grade" id="res-grade">Keep Reviewing!</div>
+        <div class="score-grade" id="res-grade">Result Status</div>
       </div>
 
       <div class="section-label">Topic Breakdown</div>
@@ -341,70 +341,576 @@
   </div>
 
   <script>
-    // ── DATA DEFINITIONS FOR SAFARI BOOK 6 ──
+    // ── SAFARI BOOK 6 TOPICS ──
     const quizTopics = [
-      { id: 'aqidah', name: 'Aqidah & Belief System', color: '#1A3A5C' },
-      { id: 'fiqh', name: 'Fiqh (Rules of Worship)', color: '#2E6B5A' },
-      { id: 'seerah', name: 'Seerah & Islamic History', color: '#C0392B' },
+      { id: 'aqidah', name: 'Aqidah (Belief System)', color: '#1A3A5C' },
+      { id: 'fiqh', name: 'Fiqh (Islamic Jurisprudence)', color: '#2E6B5A' },
+      { id: 'seerah', name: 'Seerah & History', color: '#C0392B' },
       { id: 'adab', name: 'Adab & Akhlaq (Manners)', color: '#8E44AD' }
     ];
 
+    // ── 50 QUESTIONS DIRECTLY FOR SAFARI BOOK 6 ──
     const quizQuestions = [
+      // --- AQIDAH (1-13) ---
       {
-        id: 1,
-        topic: 'aqidah',
-        question: 'Which of the following describes the core theological difference between the attributes of Allah (Sifat) and the creations?',
+        id: 1, topic: 'aqidah',
+        question: 'What is the theological meaning of Tanzih in Islamic Creed?',
         options: [
-          { letter: 'A', text: 'Allah\'s attributes are created over time' },
-          { letter: 'B', text: 'Allah\'s attributes are eternal, perfect, and absolute without any resemblance to creation' },
-          { letter: 'C', text: 'Attributes change depending on human actions' },
-          { letter: 'D', text: 'Attributes can be shared entirely with Prophets' }
+          { letter: 'A', text: 'Comparing Allah to His creations' },
+          { letter: 'B', text: 'Purifying and declaring Allah free from any flaws, limitations, or human attributes' },
+          { letter: 'C', text: 'Believing that Allah only exists in nature' },
+          { letter: 'D', text: 'Denying the existence of angels' }
         ],
-        correct: 'B',
-        explanation: 'In Book 6 Aqidah, Tanzih defines that Allah\'s Sifat are absolute, eternal, and distinct from any limitations or descriptions seen in created beings.'
+        correct: 'B', explanation: 'Tanzih means declaring Allah free from imperfection and ensuring we do not compare Him to created things.'
       },
       {
-        id: 2,
-        topic: 'fiqh',
-        question: 'Under Fiqh regulations, what is the core legal ruling regarding a traveler combining prayers (Jam\') and shortening them (Qasr)?',
+        id: 2, topic: 'aqidah',
+        question: 'Which statement accurately describes Allah\'s attribute of Al-Qadim?',
         options: [
-          { letter: 'A', text: 'It is strictly forbidden under normal circumstances' },
-          { letter: 'B', text: 'It is a concession (Rukhshah) allowed when traveling past the specified threshold distance' },
-          { letter: 'C', text: 'It is mandatory for every single prayer daily' },
-          { letter: 'D', text: 'It can only be applied to Fajr and Maghrib prayers' }
+          { letter: 'A', text: 'He is subject to time changes' },
+          { letter: 'B', text: 'He is The Eternal, who existed before anything else without a beginning' },
+          { letter: 'C', text: 'He was created after the universe' },
+          { letter: 'D', text: 'His existence has an end point' }
         ],
-        correct: 'B',
-        explanation: 'Qasr and Jam\' serve as valid concessions (Rukhshah) designed to ease hardship for travelers once they exit their residential city limits for travel distances defined in Fiqh.'
+        correct: 'B', explanation: 'Al-Qadim signifies that Allah is timeless and His existence has absolutely no beginning.'
       },
       {
-        id: 3,
-        topic: 'seerah',
-        question: 'What major milestone followed the Treaty of Hudaybiyyah in terms of the spread of Islam during the Seerah?',
+        id: 3, topic: 'aqidah',
+        question: 'What is the definition of Shirk al-Asghar?',
         options: [
-          { letter: 'A', text: 'The immediate building of the Prophet\'s Mosque' },
-          { letter: 'B', text: 'The immediate migration to Abyssinia' },
-          { letter: 'C', text: 'Peace allowed the Prophet (SAW) to safely dispatch diplomatic letters to global rulers' },
-          { letter: 'D', text: 'The termination of all trade agreements across Arabia' }
+          { letter: 'A', text: 'Worshipping completely different idols outright' },
+          { letter: 'B', text: 'Minor shirk, such as performing acts of worship to show off to people (Riyaa)' },
+          { letter: 'C', text: 'Believing in two equal gods' },
+          { letter: 'D', text: 'Disbelieving in the day of judgment entirely' }
         ],
-        correct: 'C',
-        explanation: 'The temporary peace afforded by the Treaty of Hudaybiyyah allowed the Prophet ﷺ to expand outreach, writing directly to empires like Rome, Persia, and Abyssinia.'
+        correct: 'B', explanation: 'Shirk al-Asghar includes minor hidden forms of association, such as displaying good deeds for praise (Riyaa).'
       },
       {
-        id: 4,
-        topic: 'adab',
-        question: 'According to the principles of Akhlaq, which attribute counteracts the spiritual disease of Hasad (destructive envy)?',
+        id: 4, topic: 'aqidah',
+        question: 'Belief in the Divine Decree (Al-Qadr) implies which of the following actions?',
         options: [
-          { letter: 'A', text: 'Riyaa (Showing off accomplishments)' },
-          { letter: 'B', text: 'Qana\'ah (Contentment with what Allah has decreed)' },
-          { letter: 'C', text: 'Kibr (Arrogance toward peers)' },
-          { letter: 'D', text: 'Ujb (Vanity in worship)' }
+          { letter: 'A', text: 'Giving up all efforts since everything is written' },
+          { letter: 'B', text: 'Believing Allah knows, creates, and decrees everything, while taking active responsibility for choices' },
+          { letter: 'C', text: 'Believing humans have zero willpower' },
+          { letter: 'D', text: 'Believing that everything happens completely by random luck' }
         ],
-        correct: 'B',
-        explanation: 'Qana\'ah (contentment) directly neutralizes Hasad. Being content with your own provision means you do not harbor malicious feelings toward the blessings of others.'
+        correct: 'B', explanation: 'Al-Qadr requires recognizing Allah\'s total sovereignty while putting forth personal effort.'
+      },
+      {
+        id: 5, topic: 'aqidah',
+        question: 'What does the attribute Al-Baqi mean regarding Allah?',
+        options: [
+          { letter: 'A', text: 'The All-Powerful' },
+          { letter: 'B', text: 'The Everlasting, who remains forever after creation perishes' },
+          { letter: 'C', text: 'The Most Merciful' },
+          { letter: 'D', text: 'The Provider of food' }
+        ],
+        correct: 'B', explanation: 'Al-Baqi guarantees that Allah is everlasting and survives everything else in existence.'
+      },
+      {
+        id: 6, topic: 'aqidah',
+        question: 'Which of the following is considered part of the Unseen (Ghayb)?',
+        options: [
+          { letter: 'A', text: 'The physical trees and oceans' },
+          { letter: 'B', text: 'The questions of the grave by Munkar and Nakir' },
+          { letter: 'C', text: 'Scientific facts observed under microscopes' },
+          { letter: 'D', text: 'Historical buildings built by humans' }
+        ],
+        correct: 'B', explanation: 'Life in the grave and the actions of angels belong completely to the realm of the Unseen (Ghayb).'
+      },
+      {
+        id: 7, topic: 'aqidah',
+        question: 'What is the role of the Scale (Al-Mizan) on the Day of Resurrection?',
+        options: [
+          { letter: 'A', text: 'To weigh the physical mass of human bodies' },
+          { letter: 'B', text: 'To weigh human deeds, tracking whether good or bad outbalances the other' },
+          { letter: 'C', text: 'To count the number of days spent on Earth' },
+          { letter: 'D', text: 'To distribute wealth to people' }
+        ],
+        correct: 'B', explanation: 'Al-Mizan is the literal scale designed to weigh the moral balance of human actions.'
+      },
+      {
+        id: 8, topic: 'aqidah',
+        question: 'What is the description of Al-Hawd in Islamic eschatology?',
+        options: [
+          { letter: 'A', text: 'The path over hellfire' },
+          { letter: 'B', text: 'The prophetic pool where true believers will drink on the Day of Judgment' },
+          { letter: 'C', text: 'The gate of paradise' },
+          { letter: 'D', text: 'The throne of the angels' }
+        ],
+        correct: 'B', explanation: 'Al-Hawd is the special reservoir granted to the Prophet ﷺ from which believers will drink.'
+      },
+      {
+        id: 9, topic: 'aqidah',
+        question: 'Why are prophets protected from falling into major sins (Ismah)?',
+        options: [
+          { letter: 'A', text: 'Because they are not human beings' },
+          { letter: 'B', text: 'To preserve the perfection and reliability of the divine message they deliver' },
+          { letter: 'C', text: 'Because they cannot move physically' },
+          { letter: 'D', text: 'To allow them to rule empires without laws' }
+        ],
+        correct: 'B', explanation: 'Ismah (infallibility) ensures that the examples and teachings of the prophets remain pure and trustworthy.'
+      },
+      {
+        id: 10, topic: 'aqidah',
+        question: 'What distinguishes a Mu\'jizah (Miracle) from regular occurrences?',
+        options: [
+          { letter: 'A', text: 'It can be learned by anyone practicing magic tricks' },
+          { letter: 'B', text: 'It is a supernatural event granted by Allah to a prophet to verify their claim' },
+          { letter: 'C', text: 'It happens every single day to all people' },
+          { letter: 'D', text: 'It is done for amusement or financial profit' }
+        ],
+        correct: 'B', explanation: 'A Mu\'jizah is a direct sign from Allah that breaks natural laws to support a true prophet.'
+      },
+      {
+        id: 11, topic: 'aqidah',
+        question: 'What is the theological danger of claiming knowledge of the exact time of the Hour (Qiyamah)?',
+        options: [
+          { letter: 'A', text: 'It conflicts with the Quranic truth that only Allah holds this knowledge' },
+          { letter: 'B', text: 'It is allowed if calculated with math models' },
+          { letter: 'C', text: 'It is a required act of worship' },
+          { letter: 'D', text: 'It increases worldly wealth' }
+        ],
+        correct: 'A', explanation: 'The timing of the Hour is exclusive to Allah\'s knowledge, as confirmed in Surah Luqman.'
+      },
+      {
+        id: 12, topic: 'aqidah',
+        question: 'What does the belief in the scriptures (Kutub) include for a Muslim?',
+        options: [
+          { letter: 'A', text: 'Believing only the text of the modern Quran ever existed' },
+          { letter: 'B', text: 'Believing that Allah revealed books to past prophets in their original pure forms' },
+          { letter: 'C', text: 'Following the laws of older scriptures today' },
+          { letter: 'D', text: 'Denying all scriptures except oral stories' }
+        ],
+        correct: 'B', explanation: 'Muslims must believe that original books (Torah, Gospel, Psalms) were authentically revealed by Allah.'
+      },
+      {
+        id: 13, topic: 'aqidah',
+        question: 'Which of the following describes the attribute of Al-Khaliq?',
+        options: [
+          { letter: 'A', text: 'The Sustainer' },
+          { letter: 'B', text: 'The Creator, who brings things from non-existence into existence' },
+          { letter: 'C', text: 'The Wise Judge' },
+          { letter: 'D', text: 'The Forgiver' }
+        ],
+        correct: 'B', explanation: 'Al-Khaliq means The Creator, who originates everything without any pre-existing blueprint.'
+      },
+
+      // --- FIQH (14-25) ---
+      {
+        id: 14, topic: 'fiqh',
+        question: 'What is the operational distance threshold required to qualify a journey for travel concessions (Qasr)?',
+        options: [
+          { letter: 'A', text: 'Around 5 miles' },
+          { letter: 'B', text: 'Approximately 48 miles (approx. 77-80 km) away from one\'s city boundary' },
+          { letter: 'C', text: 'Exactly 500 meters' },
+          { letter: 'D', text: 'Any distance that takes more than 10 hours' }
+        ],
+        correct: 'B', explanation: 'Classic Fiqh calculations approximate the travel concession (Safar) threshold around 48 miles.'
+      },
+      {
+        id: 15, topic: 'fiqh',
+        question: 'Which prayers are allowed to be shortened during travel (Qasr)?',
+        options: [
+          { letter: 'A', text: 'Fajr, Maghrib, and Isha' },
+          { letter: 'B', text: 'Dhuhr, Asr, and Isha' },
+          { letter: 'C', text: 'Only Asr' },
+          { letter: 'D', text: 'All five prayers including Fajr' }
+        ],
+        correct: 'B', explanation: 'Only the 4-rak\'ah prayers (Dhuhr, Asr, and Isha) are shortened to 2 rak\'ahs.'
+      },
+      {
+        id: 16, topic: 'fiqh',
+        question: 'What is the core ruling on Jam\' al-Taqdim?',
+        options: [
+          { letter: 'A', text: 'Delaying a prayer to a later time slot' },
+          { letter: 'B', text: 'Bringing the second prayer forward into the time slot of the first prayer due to travel' },
+          { letter: 'C', text: 'Skipping prayers until the journey is complete' },
+          { letter: 'D', text: 'Combining Fajr with Dhuhr' }
+        ],
+        correct: 'B', explanation: 'Jam\' al-Taqdim means advancing the later prayer into the earlier prayer\'s timeframe.'
+      },
+      {
+        id: 17, topic: 'fiqh',
+        question: 'What is the primary condition required for Tayammum (Dry Ablution) to become permissible?',
+        options: [
+          { letter: 'A', text: 'Losing one\'s prayer cap' },
+          { letter: 'B', text: 'The complete absence of clean water or an inability to use it due to illness' },
+          { letter: 'C', text: 'Feeling slightly cold' },
+          { letter: 'D', text: 'Being inside a mosque' }
+        ],
+        correct: 'B', explanation: 'Tayammum is granted as a concession when clean water is unavailable or dangerous to health.'
+      },
+      {
+        id: 18, topic: 'fiqh',
+        question: 'What acts nullify the fast (Sawm) according to Fiqh principles?',
+        options: [
+          { letter: 'A', text: 'Brushing teeth carefully without swallowing water' },
+          { letter: 'B', text: 'Deliberate eating, drinking, or intentional vomiting' },
+          { letter: 'C', text: 'Accidentally swallowing food due to forgetfulness' },
+          { letter: 'D', text: 'Applying perfume' }
+        ],
+        correct: 'B', explanation: 'Intentional ingestion of food or liquid, or self-induced vomiting, breaks the fast.'
+      },
+      {
+        id: 19, topic: 'fiqh',
+        question: 'What is the specific definition of Nisab in Zakat calculation?',
+        options: [
+          { letter: 'A', text: 'The maximum amount of money a person can spend' },
+          { letter: 'B', text: 'The minimum threshold of wealth a person must own for one lunar year to owe Zakat' },
+          { letter: 'C', text: 'The tax paid on agricultural land' },
+          { letter: 'D', text: 'The value of a family house' }
+        ],
+        correct: 'B', explanation: 'Nisab is the minimum baseline value of savings that triggers the obligation of Zakat.'
+      },
+      {
+        id: 20, topic: 'fiqh',
+        question: 'What percentage of eligible accumulated wealth must be paid as Zakat annually?',
+        options: [
+          { letter: 'A', text: '10%' },
+          { letter: 'B', text: '2.5%' },
+          { letter: 'C', text: '50%' },
+          { letter: 'D', text: '1.5%' }
+        ],
+        correct: 'B', explanation: 'The established rate of Zakat on monetary savings and gold/silver asset values is 2.5%.'
+      },
+      {
+        id: 21, topic: 'fiqh',
+        question: 'What does the term Fard Kifayah mean in community jurisprudence?',
+        options: [
+          { letter: 'A', text: 'An individual obligation on every single adult' },
+          { letter: 'B', text: 'A communal obligation; if a few fulfill it, the sin is lifted from the community' },
+          { letter: 'C', text: 'An optional act that carries no reward' },
+          { letter: 'D', text: 'A forbidden practice' }
+        ],
+        correct: 'B', explanation: 'Fard Kifayah refers to actions like the funeral prayer, which suffice if completed by a group.'
+      },
+      {
+        id: 22, topic: 'fiqh',
+        question: 'Which of the following represents a structural pillar (Rukn) of Salah?',
+        options: [
+          { letter: 'A', text: 'Wearing new clothes' },
+          { letter: 'B', text: 'Reciting an extra surah after Surah al-Fatiha' },
+          { letter: 'C', text: 'The Ruku (Bowing down) and Sujud (Prostration)' },
+          { letter: 'D', text: 'Saying the Du\'a al-Qunut' }
+        ],
+        correct: 'C', explanation: 'Ruku and Sujud are fundamental physical pillars (Arkan). Without them, Salah is invalid.'
+      },
+      {
+        id: 23, topic: 'fiqh',
+        question: 'What is the ruling on standard transactions involving Riba (Usury/Interest)?',
+        options: [
+          { letter: 'A', text: 'Highly encouraged in trade' },
+          { letter: 'B', text: 'Strictly prohibited (Haram) due to exploitation and injustice' },
+          { letter: 'C', text: 'Makruh (disliked) but allowed' },
+          { letter: 'D', text: 'Fard on businessmen' }
+        ],
+        correct: 'B', explanation: 'Riba is strictly forbidden in Shariah because it creates economic harm and exploitation.'
+      },
+      {
+        id: 24, topic: 'fiqh',
+        question: 'What constitutes the state of Ihram during Hajj?',
+        options: [
+          { letter: 'A', text: 'Buying gifts in Makkah' },
+          { letter: 'B', text: 'A sacred state entered through specific intentions and clothing with strict behavioral rules' },
+          { letter: 'C', text: 'Climbing Mount Arafat at night only' },
+          { letter: 'D', text: 'Visiting the city of Madinah' }
+        ],
+        correct: 'B', explanation: 'Ihram is the formal state of devotion and restriction required for performing Hajj and Umrah.'
+      },
+      {
+        id: 25, topic: 'fiqh',
+        question: 'What is the proper method for fixing a mistake of omission in Salah before finishing with Taslim?',
+        options: [
+          { letter: 'A', text: 'Restarting the entire prayer instantly' },
+          { letter: 'B', text: 'Performing Sujud al-Sahw (Two prostrations of forgetfulness)' },
+          { letter: 'C', text: 'Giving charity immediately' },
+          { letter: 'D', text: 'Ignoring the mistake completely' }
+        ],
+        correct: 'B', explanation: 'Sujud al-Sahw fixes omissions or minor additions made out of forgetfulness during Salah.'
+      },
+
+      // --- SEERAH & HISTORY (26-38) ---
+      {
+        id: 26, topic: 'seerah',
+        question: 'What year did the migration (Hijrah) to Madinah take place, marking the start of the Islamic calendar?',
+        options: [
+          { letter: 'A', text: '610 CE' },
+          { letter: 'B', text: '622 CE' },
+          { letter: 'C', text: '632 CE' },
+          { letter: 'D', text: '570 CE' }
+        ],
+        correct: 'B', explanation: 'The Hijrah occurred in 622 CE under the leadership of the Prophet ﷺ and Abu Bakr (RA).'
+      },
+      {
+        id: 27, topic: 'seerah',
+        question: 'What was the core outcome of the historic Treaty of Hudaybiyyah?',
+        options: [
+          { letter: 'A', text: 'An immediate war with neighboring countries' },
+          { letter: 'B', text: 'A 10-year peace agreement allowing Muslims to openly spread Islam' },
+          { letter: 'C', text: 'The destruction of the city of Makkah' },
+          { letter: 'D', text: 'The cancellation of the upcoming Hajj forever' }
+        ],
+        correct: 'B', explanation: 'The Treaty of Hudaybiyyah established a truce, creating an opening for widespread da\'wah.'
+      },
+      {
+        id: 28, topic: 'seerah',
+        question: 'Who was chosen as the first Caliph (Khalifah) of Islam after the death of the Prophet (SAW)?',
+        options: [
+          { letter: 'A', text: 'Umar ibn al-Khattab' },
+          { letter: 'B', text: 'Abu Bakr al-Siddiq' },
+          { letter: 'C', text: 'Ali ibn Abi Talib' },
+          { letter: 'D', text: 'Uthman ibn Affan' }
+        ],
+        correct: 'B', explanation: 'Abu Bakr (RA) was unified as the leader to stabilize the Muslim community after the Prophet\'s passing.'
+      },
+      {
+        id: 29, topic: 'seerah',
+        question: 'During whose caliphate was the official dynamic compilation of the Quran into standardized books completed?',
+        options: [
+          { letter: 'A', text: 'Prophet Muhammad himself' },
+          { letter: 'B', text: 'Uthman ibn Affan' },
+          { letter: 'C', text: 'Ali ibn Abi Talib' },
+          { letter: 'D', text: 'Muawiyah' }
+        ],
+        correct: 'B', explanation: 'Uthman (RA) distributed standardized Mushafs across regions to maintain consistent recitation.'
+      },
+      {
+        id: 30, topic: 'seerah',
+        question: 'What was the major strategic feature used by Muslims in the Battle of the Trench (Khandaq)?',
+        options: [
+          { letter: 'A', text: 'Fighting on massive ships' },
+          { letter: 'B', text: 'Digging a deep trench around vulnerable entry borders of Madinah' },
+          { letter: 'C', text: 'Building high stone walls over the mountains' },
+          { letter: 'D', text: 'Surrendering immediately' }
+        ],
+        correct: 'B', explanation: 'Suggested by Salman al-Farsi (RA), digging a trench protected the city from the confederate armies.'
+      },
+      {
+        id: 31, topic: 'seerah',
+        question: 'What did the Prophet (SAW) declare to the people of Makkah during the Conquest of Makkah?',
+        options: [
+          { letter: 'A', text: 'Total imprisonment of all leaders' },
+          { letter: 'B', text: 'Universal forgiveness and safety for those who did not fight' },
+          { letter: 'C', text: 'Exile of the entire population' },
+          { letter: 'D', text: 'A heavy monetary penalty on every home' }
+        ],
+        correct: 'B', explanation: 'The Conquest of Makkah is famous for the Prophet\'s unparalleled mercy and general amnesty.'
+      },
+      {
+        id: 32, topic: 'seerah',
+        question: 'Who are the Al-Ansar in the history of Madinah?',
+        options: [
+          { letter: 'A', text: 'The people who migrated from Makkah leaving their wealth' },
+          { letter: 'B', text: 'The helpers of Madinah who welcomed and supported the Muhajirun' },
+          { letter: 'C', text: 'The army sent to Rome' },
+          { letter: 'D', text: 'The traders from Syria' }
+        ],
+        correct: 'B', explanation: 'The Ansar were the local residents of Madinah who shared their resources with the incoming migrants.'
+      },
+      {
+        id: 33, topic: 'seerah',
+        question: 'What was the primary focus of the Prophet\'s speech during the Farewell Pilgrimage (Hajjat al-Wada\')?',
+        options: [
+          { letter: 'A', text: 'Detailing methods of industrial farming' },
+          { letter: 'B', text: 'Human rights, equality across races, protection of women\'s rights, and completing religion' },
+          { letter: 'C', text: 'Planning future maps of empires' },
+          { letter: 'D', text: 'Declaring changing of prayer directions' }
+        ],
+        correct: 'B', explanation: 'The Farewell Sermon summarized the social, ethical, and spiritual foundations of Islam.'
+      },
+      {
+        id: 34, topic: 'seerah',
+        question: 'Which companion accompanied the Prophet (SAW) inside the Cave of Thawr during the Hijrah?',
+        options: [
+          { letter: 'A', text: 'Umar ibn al-Khattab' },
+          { letter: 'B', text: 'Abu Bakr al-Siddiq' },
+          { letter: 'C', text: 'Hamzah ibn Abdul-Muttalib' },
+          { letter: 'D', text: 'Bilal ibn Rabah' }
+        ],
+        correct: 'B', explanation: 'Abu Bakr (RA) stayed by the Prophet\'s side during this critical, dangerous phase of the migration.'
+      },
+      {
+        id: 35, topic: 'seerah',
+        question: 'What was the first mosque built by the Prophet (SAW) upon reaching the outskirts of Madinah?',
+        options: [
+          { letter: 'A', text: 'Al-Aqsa Mosque' },
+          { letter: 'B', text: 'Quba Mosque' },
+          { letter: 'C', text: 'The Blue Mosque' },
+          { letter: 'D', text: 'The Umayyad Mosque' }
+        ],
+        correct: 'B', explanation: 'Masjid Quba was established on the Prophet\'s arrival in the locality of Quba before he entered central Madinah.'
+      },
+      {
+        id: 36, topic: 'seerah',
+        question: 'Who was known as Al-Faruq (The one who distinguishes truth from falsehood)?',
+        options: [
+          { letter: 'A', text: 'Abu Bakr' },
+          { letter: 'B', text: 'Umar ibn al-Khattab' },
+          { letter: 'C', text: 'Uthman ibn Affan' },
+          { letter: 'D', text: 'Khalid ibn al-Walid' }
+        ],
+        correct: 'B', explanation: 'Umar (RA) received the title Al-Faruq due to his uncompromising clarity and justice.'
+      },
+      {
+        id: 37, topic: 'seerah',
+        question: 'What was the significance of the Pledge of Ridwan (Bay\'at ar-Ridwan)?',
+        options: [
+          { letter: 'A', text: 'A pledge to stand firm after rumors that Uthman (RA) had been killed in Makkah' },
+          { letter: 'B', text: 'An agreement to change trading routes' },
+          { letter: 'C', text: 'A declaration of farming partnerships' },
+          { letter: 'D', text: 'The election of the third Caliph' }
+        ],
+        correct: 'A', explanation: 'The companions pledged absolute loyalty beneath the tree when Uthman\'s safety was threatened during negotiations.'
+      },
+      {
+        id: 38, topic: 'seerah',
+        question: 'Which major battle resulted from a surprise attack by pagan tribes in a valley shortly after the Conquest of Makkah?',
+        options: [
+          { letter: 'A', text: 'Battle of Badr' },
+          { letter: 'B', text: 'Battle of Hunayn' },
+          { letter: 'C', text: 'Battle of Uhud' },
+          { letter: 'D', text: 'Battle of Tabuk' }
+        ],
+        correct: 'B', explanation: 'The Battle of Hunayn tested the believers\' reliance on numbers before granting victory through steadfastness.'
+      },
+
+      // --- ADAB & AKHLAQ (39-50) ---
+      {
+        id: 39, topic: 'adab',
+        question: 'What is the precise definition of Gheebah (Backbiting) according to the Prophet\'s definition?',
+        options: [
+          { letter: 'A', text: 'Telling a lie about someone directly to their face' },
+          { letter: 'B', text: 'Speaking about your brother in his absence in a manner that he would dislike' },
+          { letter: 'C', text: 'Praising someone excessively in public' },
+          { letter: 'D', text: 'Writing books on historical figures' }
+        ],
+        correct: 'B', explanation: 'Gheebah is defined as saying true things about someone behind their back that they would find hurtful.'
+      },
+      {
+        id: 40, topic: 'adab',
+        question: 'What is the definition of Buhtan?',
+        options: [
+          { letter: 'A', text: 'Slandering someone by making up a false accusation about them behind their back' },
+          { letter: 'B', text: 'Telling the truth to save a friend' },
+          { letter: 'C', text: 'Keeping a secret safe' },
+          { letter: 'D', text: 'Giving gifts to neighbors' }
+        ],
+        correct: 'A', explanation: 'Buhtan is a severe sin combining the malice of backbiting with the complete falsehood of lying.'
+      },
+      {
+        id: 41, topic: 'adab',
+        question: 'Which trait is considered the antidote to Arrogance (Kibr)?',
+        options: [
+          { letter: 'A', text: 'Pride in ancestors' },
+          { letter: 'B', text: 'Humility (Tawadu\')' },
+          { letter: 'C', text: 'Amassing excessive property' },
+          { letter: 'D', text: 'Being loud in conversation' }
+        ],
+        correct: 'B', explanation: 'Tawadu\' (humility) recognizes that all honor and blessings belong entirely to Allah, curing arrogance.'
+      },
+      {
+        id: 42, topic: 'adab',
+        question: 'What is the correct Islamic etiquette when entering someone else\'s house?',
+        options: [
+          { letter: 'A', text: 'Walking inside directly without alerting anyone' },
+          { letter: 'B', text: 'Seeking permission up to three times and greeting them with Taslim' },
+          { letter: 'C', text: 'Peeking through the windows first' },
+          { letter: 'D', text: 'Shouting from the backyard' }
+        ],
+        correct: 'B', explanation: 'Surah An-Nur teaches seekers of entry to request permission three times before departing if unanswered.'
+      },
+      {
+        id: 43, topic: 'adab',
+        question: 'What moral danger does Namimah (Tale-bearing) pose to a community?',
+        options: [
+          { letter: 'A', text: 'It creates commercial balance' },
+          { letter: 'B', text: 'It carries stories between people to intentionally cause division, fights, and broken relationships' },
+          { letter: 'C', text: 'It helps clean local environments' },
+          { letter: 'D', text: 'It speeds up legal processing' }
+        ],
+        correct: 'B', explanation: 'Namimah destroys social harmony by carrying malicious gossip between friends or family members.'
+      },
+      {
+        id: 44, topic: 'adab',
+        question: 'How should a Muslim exercise the duty of commanding the good and forbidding evil (Al-Amr bil-Ma\'ruf)?',
+        options: [
+          { letter: 'A', text: 'With harshness, public insults, and force' },
+          { letter: 'B', text: 'With wisdom, gentle speech, patience, and exemplary personal character' },
+          { letter: 'C', text: 'By ignoring everything completely and never speaking up' },
+          { letter: 'D', text: 'By posting anonymous online abuse' }
+        ],
+        correct: 'B', explanation: 'The Quran commands calling to the way of your Lord with wisdom and beautiful preaching.'
+      },
+      {
+        id: 45, topic: 'adab',
+        question: 'What is the value of keeping promises (Wafa bil-Ahd) in Islamic character?',
+        options: [
+          { letter: 'A', text: 'It is optional and can be skipped if inconvenient' },
+          { letter: 'B', text: 'It is an essential requirement; breaking promises intentionally is a characteristic of hypocrisy (Nifaq)' },
+          { letter: 'C', text: 'It is only required when dealing with relatives' },
+          { letter: 'D', text: 'It is penalized in business deals' }
+        ],
+        correct: 'B', explanation: 'The Prophet ﷺ taught that breaking trusts and promises are primary behavioral signs of a hypocrite.'
+      },
+      {
+        id: 46, topic: 'adab',
+        question: 'What does the term Sabr (Patience/Perseverance) mean when facing sudden hardship?',
+        options: [
+          { letter: 'A', text: 'Complaining loudly for days before accepting reality' },
+          { letter: 'B', text: 'Restraining oneself from panic or despair, staying firm in faith at the very first stroke of calamity' },
+          { letter: 'C', text: 'Blaming others for your mistakes' },
+          { letter: 'D', text: 'Abandoning actions of worship altogether' }
+        ],
+        correct: 'B', explanation: 'True Sabr is evaluated by self-restraint and resilience at the initial onset of difficulty.'
+      },
+      {
+        id: 47, topic: 'adab',
+        question: 'What represents excellence in treatment toward non-Muslim neighbors?',
+        options: [
+          { letter: 'A', text: 'Ignoring them completely' },
+          { letter: 'B', text: 'Kindness, justice, sharing food, respecting rights, and modeling the beauty of Islam' },
+          { letter: 'C', text: 'Damaging their property' },
+          { letter: 'D', text: 'Interfering in their personal business' }
+        ],
+        correct: 'B', explanation: 'Islam teaches comprehensive neighborly duties of safety, charity, and fair dealing, regardless of faith.'
+      },
+      {
+        id: 48, topic: 'adab',
+        question: 'What constitutes the spiritual disease of Riyaa?',
+        options: [
+          { letter: 'A', text: 'Forgetting parts of a prayer' },
+          { letter: 'B', text: 'Performing acts of ibadah to gain praise, admiration, or status from people instead of seeking Allah\'s pleasure alone' },
+          { letter: 'C', text: 'Eating food that is borderline doubtful' },
+          { letter: 'D', text: 'Sleeping past sunrise accidentally' }
+        ],
+        correct: 'B', explanation: 'Riyaa compromises the sincerity (Ikhlas) required for deeds to be spiritually accepted.'
+      },
+      {
+        id: 49, topic: 'adab',
+        question: 'What is the correct adab when experiencing a bad dream?',
+        options: [
+          { letter: 'A', text: 'Broadcasting the dream details to everyone on social media' },
+          { letter: 'B', text: 'Seeking refuge in Allah from Shaytan, spitting dryly to the left three times, and keeping it private' },
+          { letter: 'C', text: 'Crying continuously' },
+          { letter: 'D', text: 'Running out of the house immediately' }
+        ],
+        correct: 'B', explanation: 'The Sunnah teaches guarding oneself against unsettling dreams by following these quiet, protective measures.'
+      },
+      {
+        id: 50, topic: 'adab',
+        question: 'What does the term Silat ar-Rahim refer to?',
+        options: [
+          { letter: 'A', text: 'Learning advanced scientific fields' },
+          { letter: 'B', text: 'Maintaining and nurturing healthy, supportive ties with family and relatives' },
+          { letter: 'C', text: 'Traveling across desert landscapes' },
+          { letter: 'D', text: 'Memorizing dictionaries' }
+        ],
+        correct: 'B', explanation: 'Silat ar-Rahim is an obligation to preserve family bonds and check on relatives regularly.'
       }
     ];
 
-    // ── APPLICATION STATE ──
+    // ── APPLICATION ENGINE STATE ──
     let selectedTopics = [];
     let targetQuestionCount = 0;
     let activeQuizPool = [];
@@ -429,7 +935,6 @@
       `).join('');
     }
 
-    // ── CONFIGURATION & SETUP EVENT HANDLERS ──
     function toggleTopic(id) {
       if (selectedTopics.includes(id)) {
         selectedTopics = selectedTopics.filter(t => t !== id);
@@ -468,8 +973,8 @@
         return;
       }
 
-      // Generate step options based on volume up to pool ceiling
-      const intervals = [3, 5, 10, 20].filter(num => num <= totalAvailable);
+      // Dynamic button thresholds matching layout constraints
+      const intervals = [5, 10, 20, 30, 50].filter(num => num <= totalAvailable);
       if (!intervals.includes(totalAvailable) && totalAvailable > 0) {
         intervals.push(totalAvailable);
       }
@@ -486,27 +991,22 @@
         grid.appendChild(btn);
       });
 
-      // Ensure fallback if previously selected value exceeds new bounds
       if (!intervals.includes(targetQuestionCount)) {
         targetQuestionCount = intervals[0] || 0;
-        const targetBtn = grid.children[0];
-        if (targetBtn) targetBtn.classList.add('active');
       }
 
       document.getElementById('btn-start').disabled = targetQuestionCount === 0;
     }
 
-    // ── ENGINE CONTROLLERS ──
+    // ── CORE GAME LOOP CONTROLLERS ──
     function startQuiz() {
       const pool = quizQuestions.filter(q => selectedTopics.includes(q.topic));
-      // Simple random sorting array mechanism
       activeQuizPool = pool.sort(() => 0.5 - Math.random()).slice(0, targetQuestionCount);
       
       currentIdx = 0;
       correctAnswersCount = 0;
       topicTrackingData = {};
       
-      // Initialize tracking counts across topics
       selectedTopics.forEach(id => {
         topicTrackingData[id] = { total: 0, correct: 0 };
       });
@@ -523,12 +1023,10 @@
 
       const q = activeQuizPool[currentIdx];
       
-      // Track the distribution frequency inside tracking logs
       if (topicTrackingData[q.topic]) {
         topicTrackingData[q.topic].total += 1;
       }
 
-      // Update basic status tracking fields
       document.getElementById('quiz-progress-text').innerText = `Question ${currentIdx + 1} of ${targetQuestionCount}`;
       document.getElementById('quiz-score-live').innerText = `Score: ${correctAnswersCount}`;
       
@@ -543,7 +1041,6 @@
 
       document.getElementById('quiz-question-text').innerText = q.question;
       
-      // Clean up layout items
       document.getElementById('quiz-explanation').classList.add('hidden');
       const actionBtn = document.getElementById('btn-action');
       actionBtn.className = 'btn-check';
@@ -600,12 +1097,10 @@
       const allOptions = document.querySelectorAll('.option-btn');
       allOptions.forEach(opt => opt.classList.add('revealed'));
 
-      // Render out feedback explanations
       const expBox = document.getElementById('quiz-explanation');
       expBox.innerText = q.explanation;
       expBox.classList.remove('hidden');
 
-      // Adjust primary action tracking label
       const actionBtn = document.getElementById('btn-action');
       actionBtn.className = 'btn-next';
       actionBtn.innerText = (currentIdx === targetQuestionCount - 1) ? 'Finish Quiz' : 'Next Question';
@@ -667,7 +1162,6 @@
       clearTopics();
     }
 
-    // Initialize application layout components on load sequence execution
     window.onload = init;
   </script>
 </body>
